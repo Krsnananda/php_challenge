@@ -6,14 +6,18 @@
 
 <form action="doUpload" method="post" enctype="multipart/form-data">
 
-    <input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
+{# link para acessar script de drag and drop #}
+<script src="/upload/dist/dropzone.js"></script>
+<link rel="stylesheet" href="/upload/dist/dropzone.css"
 
-    <div>
-        <label>File to upload:</label>
-        <input type="file" name="myfile">
+<input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
+<form action="var/uploads" class="dropzone">
+    <div class="fallback">
+        <label>Arquivo para upload:</label>
+        <input type="file" multiple name="file">
     </div>
-
-    <button type="submit">Send</button>
+</form>
+    <button type="submit">Enviar</button>
 
 </form>
 

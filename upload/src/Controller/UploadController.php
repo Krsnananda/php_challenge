@@ -23,22 +23,22 @@ class UploadController extends AbstractController
         {
             $logger->info("CSRF failure");
 
-            return new Response("Operation not allowed",  Response::HTTP_BAD_REQUEST,
+            return new Response("Operação não permitida",  Response::HTTP_BAD_REQUEST,
                 ['content-type' => 'text/plain']);
         }        
 
-        $file = $request->files->get('myfile');
+        $file = $request->files->get('file');
 
         if (empty($file)) 
         {
-            return new Response("No file specified",  
+            return new Response("Nenhum arquivo especificado",  
                Response::HTTP_UNPROCESSABLE_ENTITY, ['content-type' => 'text/plain']);
         }        
 
         $filename = $file->getClientOriginalName();
         $uploader->upload($uploadDir, $file, $filename);
 
-        return new Response("File uploaded",  Response::HTTP_OK, 
+        return new Response("Upload realizado!",  Response::HTTP_OK, 
             ['content-type' => 'text/plain']);         
     }
 }
