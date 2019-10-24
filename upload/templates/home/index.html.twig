@@ -4,21 +4,52 @@
 
 {% block body %}
 
-<form action="doUpload" method="post" enctype="multipart/form-data">
+{% apply inline_css %}
+<html>
+    <body style="background: #9fd5d1"></body>
+</html>
+{% endapply %}
 
-{# link para acessar script de drag and drop #}
-<script src="/upload/dist/dropzone.js"></script>
-<link rel="stylesheet" href="/upload/dist/dropzone.css"
-
-<input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
-<form action="var/uploads" class="dropzone">
-    <div class="fallback">
+  <h1 class="col-sm-offset-3">Upload de Arquivos usando Symfony </h1><hr style="border: 1px solid white">
+   
+   {# chama o manipulador do arquivo que será enviado pela url #}
+<form action="doUpload" method="post" enctype="multipart/form-data" class="dropzone" style="border: ridge; border-color: white">
+   
+   {# Previne vulnerabilidades de Cross-Site Request Forgery  #}
+    <input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
         <label>Arquivo para upload:</label>
-        <input type="file" multiple name="file">
-    </div>
+    <div class="col-xs-4 pull-right">
+        <input type="file" multiple name="file" style="width: 100%; padding: 5%">
+    </div>    
+    <button type="submit" class="btn btn-submit btn-primary">Enviar</button>
 </form>
-    <button type="submit">Enviar</button>
 
-</form>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+<script>
+        // inicializa e configura dropzone
+        Dropzone.autoDiscover = false;
+        var dropzone_default = new Dropzone(".dropzone", {
+            url: '{{ path('upload') }}' ,
+            maxFiles: 1,
+            dictMaxFilesExceeded: 'Apenas 1 arquivo por vez',
+            acceptedFiles: 'image/*,application/pdf',
+            maxFilesize: 3,  // in Mb
+            addRemoveLinks: true,
+            init: function () {
+                this.on("maxfilesexceeded", function(file) {
+                    this.removeFile(file);
+                });
+                this.on("sending", function(file, xhr, formData) {
+                    //Envia dados adicionais com o arquivo como POST data se necessário
+                });
+                this.on("success", function(file, response) {
+                    if (response.uploaded) 
+                        alert('File Uploaded: ' + response.fileName);
+                });
+            }
+        });
+    </script>
 {% endblock %}

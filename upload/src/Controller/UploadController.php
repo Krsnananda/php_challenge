@@ -17,6 +17,7 @@ class UploadController extends AbstractController
      public function index(Request $request, string $uploadDir, 
              FileUploader $uploader, LoggerInterface $logger)
     {
+        
         $token = $request->get("token");
 
         if (!$this->isCsrfTokenValid('upload', $token)) 
