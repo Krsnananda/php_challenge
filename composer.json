@@ -7,13 +7,14 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "doctrine/orm": "*",
         "symfony/console": "*",
+        "symfony/dom-crawler": "4.3.*",
         "symfony/dotenv": "*",
         "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "*",
         "symfony/monolog-bundle": "^3.4",
-        "symfony/yaml": "*",
-        "doctrine/orm": "*"
+        "symfony/yaml": "*"
     },
     "require-dev": {
     },
